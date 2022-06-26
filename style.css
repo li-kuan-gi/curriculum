@@ -1,5 +1,21 @@
-table,
-th,
+table {
+    border-collapse: collapse;
+}
+
+tr,
+td,
+th {
+    border: solid;
+    border-width: 1px 1px;
+    padding: 0.5em;
+    text-align: center;
+}
+
 td {
-    border: 1px solid black;
+    width: 5em
+}
+
+.class {
+    background-color: orange;
+    color: blue;
 }
