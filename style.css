@@ -12,10 +12,12 @@ th {
 }
 
 td {
-    width: 5em
+    width: 5em;
 }
 
 .class {
     background-color: orange;
     color: blue;
+    position: absolute;
+    width: 3em;
 }
