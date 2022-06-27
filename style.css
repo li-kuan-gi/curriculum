@@ -1,3 +1,8 @@
+html,
+body {
+    overscroll-behavior-y: contain;
+}
+
 table {
     border-collapse: collapse;
 }
