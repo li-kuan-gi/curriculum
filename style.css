@@ -1,7 +1,3 @@
-html,
-body {
-    overscroll-behavior-y: auto;
-}
 
 table {
     border-collapse: collapse;
@@ -21,7 +17,6 @@ td {
 }
 
 .class {
-    overscroll-behavior-y: contain;
     background-color: orange;
     color: blue;
     position: absolute;
