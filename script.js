@@ -19,11 +19,13 @@ function centralize(element) {
 }
 
 function handleTouchStart(event) {
+    event.stopPropagation();
     originTouchX = event.touches[0].clientX;
     originTouchY = event.touches[0].clientY;
 }
 
 function handleTouchMove(event) {
+    event.stopPropagation();
     if (this.style.left && this.style.top) {
         const offsetX = (event.touches[0].clientX - originTouchX);
         const offsetY = (event.touches[0].clientY - originTouchY);

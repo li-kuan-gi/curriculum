@@ -17,7 +17,6 @@ td {
 }
 
 .class {
-    overscroll-behavior-y: contain;
     background-color: orange;
     color: blue;
     position: absolute;
