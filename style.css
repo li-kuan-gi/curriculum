@@ -20,4 +20,11 @@ td {
     color: blue;
     position: absolute;
     width: 3em;
+    /* cursor: grab;
+    cursor: -webkit-grab; */
+    cursor: pointer;
+}
+
+.class:active {
+    cursor: grabbing;
 }
