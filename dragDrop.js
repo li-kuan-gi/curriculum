@@ -1,22 +1,3 @@
-const draggables = Array.from(document.getElementsByClassName('klasse'));
-const dropZones = Array.from(document.getElementsByClassName('klasse-cell'));
-
-draggables.forEach(
-    element => {
-        centralize(element);
-        makeDraggable(element);
-    }
-);
-
-window.addEventListener('resize', _ => draggables.forEach(centralize));
-
-function centralize(element) {
-    parentRect = element.parentElement.getBoundingClientRect();
-    rect = element.getBoundingClientRect();
-    element.style.left = (parentRect.width - rect.width) / 2 + parentRect.x + window.scrollX + 'px';
-    element.style.top = (parentRect.height - rect.height) / 2 + parentRect.y + window.scrollY + 'px';
-}
-
 function makeDraggable(element) {
     makeTouchDraggable(element);
     makeClickDraggable(element);
@@ -28,7 +9,7 @@ function makeTouchDraggable(element) {
 
     element.addEventListener('touchstart', handleTouchStart);
     element.addEventListener('touchmove', handleTouchMove);
-    element.addEventListener('touchend', event => { fallIntoZone(event.target, dropZones); });
+    element.addEventListener('touchend', event => { fallIntoZone(event.target); });
 }
 
 function handleTouchStart(event) {
@@ -59,7 +40,7 @@ function makeClickDraggable(element) {
     element.addEventListener('mousedown', _ => { element.isMoving = true; element.style.zIndex = "100"; });
     document.addEventListener('mousemove', event => handleMouseMove(event, element));
     document.addEventListener('mouseup', _ => { element.isMoving = false; });
-    element.addEventListener('mouseup', _ => { fallIntoZone(element, dropZones); element.style.zIndex = "0"; });
+    element.addEventListener('mouseup', _ => { fallIntoZone(element); element.style.zIndex = "0"; });
 }
 
 function handleMouseMove(event, element) {
@@ -74,7 +55,9 @@ function handleMouseMove(event, element) {
     }
 }
 
-function fallIntoZone(element, zones) {
+function fallIntoZone(element) {
+    const zones = Array.from(document.getElementsByClassName('klasse-cell'));
+
     originParent = element.parentElement;
     rect = element.getBoundingClientRect();
     position = { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };

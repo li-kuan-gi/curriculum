@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="adjustPosition.js"></script>
+    <script src="dragDrop.js"></script>
     <title>Document</title>
 </head>
 
@@ -15,81 +16,15 @@
         <input type="file" id="csv-file" accept=".csv">
         <input type="submit">
     </form>
-    <table>
-        <tr>
-            <th>name</th>
-            <th>basic</th>
-            <th>homeroom</th>
-            <th>klasse</th>
-            <th>klasse</th>
-            <th>klasse</th>
-            <th>klasse</th>
-            <th>klasse</th>
-        </tr>
-        <tr>
-            <td>Ann</td>
-            <td>12</td>
-            <td>1</td>
-            <td class="klasse-cell">
-                <div class="klasse">AAA</div>
-            </td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-        </tr>
-        <tr>
-            <td>Bob</td>
-            <td>16</td>
-            <td>0</td>
-            <td class="klasse-cell">
-                <div class="klasse">BBB</div>
-            </td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-        </tr>
-        <tr>
-            <td>Cindy</td>
-            <td>16</td>
-            <td>0</td>
-            <td class="klasse-cell">
-                <div class="klasse">CCC</div>
-            </td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-        </tr>
-        <tr>
-            <td>David</td>
-            <td>16</td>
-            <td>0</td>
-            <td class="klasse-cell">
-                <div class="klasse">DDD</div>
-            </td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-        </tr>
-        <tr>
-            <td>Ella</td>
-            <td>16</td>
-            <td>0</td>
-            <td class="klasse-cell">
-                <div class="klasse">EEE</div>
-            </td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-            <td class="klasse-cell"></td>
-        </tr>
-    </table>
+    <table id="curriculum"></table>
 </body>
 
-<script src="drag.js"></script>
+<script>
+    window.addEventListener('resize', _ => {
+        const draggables = Array.from(document.getElementsByClassName('klasse'));
+        draggables.forEach(centralize);
+    });
+</script>
 <script src="csv.js"></script>
 
 </html>

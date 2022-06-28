@@ -17,9 +17,18 @@ th {
 
 td {
     width: 5em;
+    height: 2em;
 }
 
-.klasse{
+.klasse-cell {
+    background-color: rgb(179, 218, 233);
+}
+
+tr td:nth-child(4) {
+    background-color: rgb(124, 231, 124);
+}
+
+.klasse {
     background-color: orange;
     color: blue;
     position: absolute;
