@@ -1,12 +1,14 @@
-const draggables = document.getElementsByClassName('class');
-const dropZones = document.getElementsByClassName('class-cell');
+const draggables = Array.from(document.getElementsByClassName('class'));
+const dropZones = Array.from(document.getElementsByClassName('class-cell'));
 
-Array.from(draggables).forEach(
+draggables.forEach(
     element => {
         centralize(element);
         makeDraggable(element);
     }
 );
+
+window.addEventListener('resize', _ => draggables.forEach(centralize));
 
 function centralize(element) {
     parentRect = element.parentElement.getBoundingClientRect();
