@@ -14,6 +14,7 @@ csvForm.addEventListener("submit", event => {
         };
         reader.readAsText(csvFile);
     }
+    csvInput.value = "";
 });
 
 function csvToArray(str, delimiter = ",") {
