@@ -1,5 +1,5 @@
-const draggables = Array.from(document.getElementsByClassName('class'));
-const dropZones = Array.from(document.getElementsByClassName('class-cell'));
+const draggables = Array.from(document.getElementsByClassName('klasse'));
+const dropZones = Array.from(document.getElementsByClassName('klasse-cell'));
 
 draggables.forEach(
     element => {
