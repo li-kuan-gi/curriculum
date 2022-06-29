@@ -71,11 +71,14 @@ function syncBasic(row) {
     homeroomOb.observe(homeroomTd, { childList: true });
 
     const nameTd = getNameTd(row);
-    const nameOb = new MutationObserver(() => {
-        if (nameTd.style.backgroundColor !== "") {
-            basicTd.innerHTML = parseInt(basicTd.innerHTML) - DROPHOUR_DUE_TO_CHIEF;
-        } else {
-            basicTd.innerHTML = parseInt(basicTd.innerHTML) + DROPHOUR_DUE_TO_CHIEF;
+    const nameOb = new MutationObserver((ms) => {
+        console.log(ms);
+        if (ms.length === 1) {
+            if (nameTd.style.backgroundColor !== "") {
+                basicTd.innerHTML = parseInt(basicTd.innerHTML) - DROPHOUR_DUE_TO_CHIEF;
+            } else {
+                basicTd.innerHTML = parseInt(basicTd.innerHTML) + DROPHOUR_DUE_TO_CHIEF;
+            }
         }
     });
     nameOb.observe(nameTd, { attributes: true });
