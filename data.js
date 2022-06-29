@@ -1,3 +1,12 @@
+const DROPHOUR_DUE_TO_HOMEROOM = 4;
+const DROPHOUR_DUE_TO_CHIEF = 2;
+
+const CHIEF_COLOR = "yellow";
+const isChief = (row) => {
+    const hour = parseInt(getBasicTd(row).innerHTML);
+    return hour % 4 !== 0;
+};
+
 const NAME_INDEX = 0;
 const BASIC_INDEX = 1;
 const HOMEROOM_INDEX = 2;
@@ -5,6 +14,9 @@ const HOME_CLASS_INDEX = 3;
 const KLASSE_INDICES = new Array(6).fill().map((_, i) => 3 + i);
 const TOTAL_INDEX = 9;
 const EXCESS_index = 10;
+
+
+const curriculumTable = document.getElementById("curriculum");
 
 function getNameTd(row) {
     return row.childNodes[NAME_INDEX];
@@ -34,7 +46,6 @@ function getExcessTd(row) {
     return row.childNodes[EXCESS_index];
 }
 
-curriculumTable = document.getElementById("curriculum");
 
 function syncData() {
     rows = Array.from(curriculumTable.childNodes).slice(1);
@@ -48,15 +59,26 @@ function syncData() {
 
 function syncBasic(row) {
     const basicTd = getBasicTd(row);
+
     const homeroomTd = getHomeroomTd(row);
-    const basicOb = new MutationObserver(() => {
+    const homeroomOb = new MutationObserver(() => {
         if (homeroomTd.innerHTML !== "") {
-            basicTd.innerHTML = parseInt(basicTd.innerHTML) - 4;
+            basicTd.innerHTML = parseInt(basicTd.innerHTML) - DROPHOUR_DUE_TO_HOMEROOM;
         } else {
-            basicTd.innerHTML = parseInt(basicTd.innerHTML) + 4;
+            basicTd.innerHTML = parseInt(basicTd.innerHTML) + DROPHOUR_DUE_TO_HOMEROOM;
         }
     });
-    basicOb.observe(homeroomTd, { childList: true });
+    homeroomOb.observe(homeroomTd, { childList: true });
+
+    const nameTd = getNameTd(row);
+    const nameOb = new MutationObserver(() => {
+        if (nameTd.style.backgroundColor !== "") {
+            basicTd.innerHTML = parseInt(basicTd.innerHTML) - DROPHOUR_DUE_TO_CHIEF;
+        } else {
+            basicTd.innerHTML = parseInt(basicTd.innerHTML) + DROPHOUR_DUE_TO_CHIEF;
+        }
+    });
+    nameOb.observe(nameTd, { attributes: true });
 }
 
 function syncHomeroom(row) {
@@ -94,7 +116,7 @@ function getHour(td) {
         return 0;
     }
     const description = td.childNodes[0].innerHTML;
-    return description.includes('3') ? 3 : 4;
+    return parseInt(description.match(/\d+/)[0]);
 }
 
 function syncExcess(row) {

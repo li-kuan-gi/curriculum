@@ -10,6 +10,7 @@ csvForm.addEventListener("submit", event => {
         reader.onload = function (event) {
             const text = event.target.result;
             const data = csvToArray(text);
+            clearTable();
             createTableEntries(data);
             syncData();
         };
@@ -32,13 +33,17 @@ function csvToArray(str, delimiter = ",") {
     return [headers, ...arr];
 }
 
+function clearTable() {
+    curriculumTable.innerHTML = "";
+}
+
 function createTableEntries(data) {
     headers = data[0];
     rows = data.slice(1);
     createHeaders(headers);
     createRows(rows);
     processKlasses();
-    // processTeacherNames();
+    processTeacherNames();
 }
 
 function createHeaders(headers) {
@@ -48,7 +53,7 @@ function createHeaders(headers) {
         th.innerHTML = element;
         tr.appendChild(th);
     });
-    table.appendChild(tr);
+    curriculumTable.appendChild(tr);
 }
 
 function createRows(rows) {
@@ -75,7 +80,7 @@ function createRows(rows) {
             }
             tr.appendChild(td);
         });
-        table.appendChild(tr);
+        curriculumTable.appendChild(tr);
     });
 }
 
@@ -92,9 +97,18 @@ function processKlasses() {
 
 function processTeacherNames() {
     const nameTds = Array.from(document.getElementsByClassName("teacher-name"));
-    nameTds.forEach(t => {
-        t.addEventListener("click", () => { setDefaultBackgroundColor(nameTds); t.style.backgroundColor = "yellow"; });
-        t.addEventListener("touchend", () => { setDefaultBackgroundColor(nameTds); t.style.backgroundColor = "yellos"; });
+    const rows = Array.from(curriculumTable.childNodes).slice(1);
+    rows.forEach(row => {
+        const nameTd = getNameTd(row);
+
+        if (isChief(row)) {
+            nameTd.style.backgroundColor = CHIEF_COLOR;
+        } else {
+            nameTd.style.backgroundColor = "";
+        }
+
+        nameTd.addEventListener("click", () => { setDefaultBackgroundColor(nameTds); nameTd.style.backgroundColor = CHIEF_COLOR; });
+        nameTd.addEventListener("touchend", () => { setDefaultBackgroundColor(nameTds); nameTd.style.backgroundColor = CHIEF_COLOR; });
     });
 }
 
