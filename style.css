@@ -20,11 +20,15 @@ td {
     height: 2em;
 }
 
+.teacher-name {
+    cursor: pointer;
+}
+
 .klasse-cell {
     background-color: rgb(179, 218, 233);
 }
 
-tr td:nth-child(4) {
+.home-class {
     background-color: rgb(124, 231, 124);
 }
 

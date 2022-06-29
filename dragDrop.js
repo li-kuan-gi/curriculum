@@ -4,9 +4,6 @@ function makeDraggable(element) {
 }
 
 function makeTouchDraggable(element) {
-    let originTouchX;
-    let originTouchY;
-
     element.addEventListener('touchstart', handleTouchStart);
     element.addEventListener('touchmove', handleTouchMove);
     element.addEventListener('touchend', event => { fallIntoZone(event.target); });
@@ -16,22 +13,22 @@ function handleTouchStart(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    originTouchX = event.touches[0].clientX;
-    originTouchY = event.touches[0].clientY;
+    event.target.attachPointX = event.touches[0].clientX;
+    event.target.attachPointY = event.touches[0].clientY;
 }
 
 function handleTouchMove(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    const offsetX = (event.touches[0].clientX - originTouchX);
-    const offsetY = (event.touches[0].clientY - originTouchY);
+    const offsetX = (event.touches[0].clientX - event.target.attachPointX);
+    const offsetY = (event.touches[0].clientY - event.target.attachPointY);
 
     this.style.left = parseFloat(this.style.left.slice(0, -2)) + offsetX + 'px';
     this.style.top = parseFloat(this.style.top.slice(0, -2)) + offsetY + 'px';
 
-    originTouchX = event.touches[0].clientX;
-    originTouchY = event.touches[0].clientY;
+    event.target.attachPointX = event.touches[0].clientX;
+    event.target.attachPointY = event.touches[0].clientY;
 }
 
 function makeClickDraggable(element) {

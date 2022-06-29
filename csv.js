@@ -11,6 +11,7 @@ csvForm.addEventListener("submit", event => {
             const text = event.target.result;
             const data = csvToArray(text);
             createTableEntries(data);
+            syncData();
         };
         reader.readAsText(csvFile);
     }
@@ -37,6 +38,7 @@ function createTableEntries(data) {
     createHeaders(headers);
     createRows(rows);
     processKlasses();
+    // processTeacherNames();
 }
 
 function createHeaders(headers) {
@@ -54,8 +56,14 @@ function createRows(rows) {
         const tr = document.createElement('tr');
         row.forEach((v, i) => {
             const td = document.createElement('td');
-            if (2 < i && i < row.length - 2) {
+            if (i === NAME_INDEX) {
+                td.className = "teacher-name";
+            }
+            if (KLASSE_INDICES.includes(i)) {
                 td.className = "klasse-cell";
+                if (i == KLASSE_INDICES[0]) {
+                    td.className += " " + "home-class";
+                }
                 if (v !== '') {
                     const div = document.createElement('div');
                     div.className = "klasse";
@@ -80,4 +88,16 @@ function processKlasses() {
             makeDraggable(element);
         }
     );
+}
+
+function processTeacherNames() {
+    const nameTds = Array.from(document.getElementsByClassName("teacher-name"));
+    nameTds.forEach(t => {
+        t.addEventListener("click", () => { setDefaultBackgroundColor(nameTds); t.style.backgroundColor = "yellow"; });
+        t.addEventListener("touchend", () => { setDefaultBackgroundColor(nameTds); t.style.backgroundColor = "yellos"; });
+    });
+}
+
+function setDefaultBackgroundColor(tags) {
+    tags.forEach(t => t.style.backgroundColor = "");
 }
