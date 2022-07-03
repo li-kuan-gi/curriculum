@@ -71,7 +71,7 @@ function createRows(rows) {
                 }
                 if (v !== '') {
                     const div = document.createElement('div');
-                    div.className = `klasse ${getCategory(v)} grade${getGrade(v) + 1}`;
+                    div.className = `klasse ${getCategoryInDescription(v)} grade${getGradeInDescription(v) + 1}`;
                     div.innerHTML = v;
                     td.appendChild(div);
                 }
