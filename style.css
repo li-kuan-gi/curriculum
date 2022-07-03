@@ -25,16 +25,14 @@ td {
 }
 
 .klasse-cell {
-    background-color: rgb(179, 218, 233);
+    /* background-color: rgb(179, 218, 233); */
 }
 
 .home-class {
-    background-color: rgb(124, 231, 124);
+    /* background-color: rgb(124, 231, 124); */
 }
 
 .klasse {
-    background-color: orange;
-    color: blue;
     position: absolute;
     width: 3em;
     /* cursor: grab;
@@ -44,4 +42,28 @@ td {
 
 .klasse:active {
     cursor: grabbing;
+}
+
+.business {
+    color: red;
+}
+
+.engineer {
+    color: blue;
+}
+
+.physical {
+    color: green;
+}
+
+.grade1 {
+    background-color: white;
+}
+
+.grade2 {
+    background-color: aqua;
+}
+
+.grade3 {
+    background-color: yellow;
 }

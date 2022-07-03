@@ -1,7 +1,7 @@
 const DROPHOUR_DUE_TO_HOMEROOM = 4;
 const DROPHOUR_DUE_TO_CHIEF = 2;
 
-const CHIEF_COLOR = "yellow";
+const CHIEF_COLOR = "orange";
 const isChief = (row) => {
     const hour = parseInt(getBasicTd(row).innerHTML);
     return hour % 4 !== 0;
@@ -15,6 +15,11 @@ const KLASSE_INDICES = new Array(6).fill().map((_, i) => 3 + i);
 const TOTAL_INDEX = 9;
 const EXCESS_index = 10;
 
+const BUISNESS_CATEGORY = ["貿", "資", "商", "應"];
+const ENGINEER_CATEGORY = ["圖", "汽", "模", "機", "板"];
+const PHYSICAL_CATEGORY = ["體"];
+
+const GRADE_CHAR = ["一", "二", "三"];
 
 const curriculumTable = document.getElementById("curriculum");
 
@@ -120,6 +125,17 @@ function getHour(td) {
     }
     const description = td.childNodes[0].innerHTML;
     return parseInt(description.match(/\d+/)[0]);
+}
+
+function getCategory(description) {
+    if (BUISNESS_CATEGORY.find(char => description.includes(char))) { return "business"; }
+    if (ENGINEER_CATEGORY.find(char => description.includes(char))) { return "engineer"; }
+    if (PHYSICAL_CATEGORY.find(char => description.includes(char))) { return "physical"; }
+    throw "can not find category";
+}
+
+function getGrade(description) {
+    return GRADE_CHAR.findIndex(char => description.includes(char));
 }
 
 function syncExcess(row) {
