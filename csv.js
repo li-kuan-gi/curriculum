@@ -1,6 +1,7 @@
 const csvForm = document.getElementById("csv-upload-form");
 const csvInput = document.getElementById("csv-file");
-const table = document.getElementById("curriculum");
+const updateButton = document.getElementById("updating");
+
 
 csvForm.addEventListener("submit", event => {
     event.preventDefault();
@@ -13,6 +14,7 @@ csvForm.addEventListener("submit", event => {
             clearTable();
             createTableEntries(data);
             syncData();
+            showUpdateButton();
         };
         reader.readAsText(csvFile);
     }

@@ -2,6 +2,10 @@ form {
     margin: 1.5em 0 5em 1em;
 }
 
+#updating {
+    margin: 0 0 1.5em 1em
+}
+
 table {
     border-collapse: collapse;
 }

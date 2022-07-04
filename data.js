@@ -42,7 +42,8 @@ function getHomeClassTd(row) {
 }
 
 function getKlasseTds(row) {
-    return KLASSE_INDICES.map(v => row.childNodes[v]);
+    const possibleTds = KLASSE_INDICES.map(v => row.childNodes[v]);
+    return possibleTds.filter(td => td.childNodes.length > 0);
 }
 
 function getEngineerTd(row) {
@@ -59,114 +60,6 @@ function getTotalTd(row) {
 
 function getExcessTd(row) {
     return row.childNodes[EXCESS_index];
-}
-
-
-function syncData() {
-    rows = Array.from(curriculumTable.childNodes).slice(1);
-    rows.forEach(row => {
-        syncBasic(row);
-        syncHomeroom(row);
-        syncTotal(row);
-        syncExcess(row);
-        syncCategTime(row);
-    });
-}
-
-function syncBasic(row) {
-    const basicTd = getBasicTd(row);
-
-    const homeroomTd = getHomeroomTd(row);
-    const homeroomOb = new MutationObserver(() => {
-        if (homeroomTd.innerHTML !== "") {
-            basicTd.innerHTML = parseInt(basicTd.innerHTML) - DROPHOUR_DUE_TO_HOMEROOM;
-        } else {
-            basicTd.innerHTML = parseInt(basicTd.innerHTML) + DROPHOUR_DUE_TO_HOMEROOM;
-        }
-    });
-    homeroomOb.observe(homeroomTd, { childList: true });
-
-    const nameTd = getNameTd(row);
-    const nameOb = new MutationObserver((ms) => {
-        console.log(ms);
-        if (ms.length === 1) {
-            if (nameTd.style.backgroundColor !== "") {
-                basicTd.innerHTML = parseInt(basicTd.innerHTML) - DROPHOUR_DUE_TO_CHIEF;
-            } else {
-                basicTd.innerHTML = parseInt(basicTd.innerHTML) + DROPHOUR_DUE_TO_CHIEF;
-            }
-        }
-    });
-    nameOb.observe(nameTd, { attributes: true });
-}
-
-function syncHomeroom(row) {
-    const homeroomTd = getHomeroomTd(row);
-    const homeClassTd = getHomeClassTd(row);
-    const homeroomOb = new MutationObserver(() => {
-        if (homeClassTd.innerHTML !== '') {
-            homeroomTd.innerHTML = 1;
-        } else {
-            homeroomTd.innerHTML = "";
-        }
-    });
-    homeroomOb.observe(homeClassTd, { childList: true, subtree: true });
-}
-
-function syncCategTime(row) {
-    const klasseTds = getKlasseTds(row);
-    const engineerTd = getEngineerTd(row);
-    const businessTd = getBusinessTd(row);
-
-    const engineerOb = new MutationObserver(() => {
-        const engineerHour = klasseTds.reduce((p, c) => {
-            return (getCateg(c) === "engineer") || (getCateg(c) === "physical")
-                ? p + getHour(c)
-                : p;
-        }, 0);
-        engineerTd.innerHTML = engineerHour;
-    });
-    const businessOb = new MutationObserver(() => {
-        const businessHour = klasseTds.reduce((p, c) => {
-            return getCateg(c) === "business" ? p + getHour(c) : p;
-        }, 0);
-        businessTd.innerHTML = businessHour;
-    });
-
-    klasseTds.forEach((td) => {
-        engineerOb.observe(td, { childList: true });
-        businessOb.observe(td, { childList: true });
-    });
-}
-
-function syncTotal(row) {
-    const klasseTds = getKlasseTds(row);
-    const homeroomTd = getHomeroomTd(row);
-    const totalTd = getTotalTd(row);
-
-    const totalOb = new MutationObserver(() => {
-        const homeroomHour = homeroomTd.innerHTML === '' ? 0 : 1;
-        const klassesHour = klasseTds.reduce((p, c) => p + getHour(c), 0);
-        totalTd.innerHTML = homeroomHour + klassesHour;
-    });
-
-    totalOb.observe(homeroomTd, { childList: true });
-    klasseTds.forEach((td) => {
-        totalOb.observe(td, { childList: true });
-    });
-}
-
-function syncExcess(row) {
-    const basicTd = getBasicTd(row);
-    const totalTd = getTotalTd(row);
-    const excessTd = getExcessTd(row);
-
-    const excessOb = new MutationObserver(() => {
-        excessTd.innerHTML = parseInt(totalTd.innerHTML) - parseInt(basicTd.innerHTML);
-    });
-
-    excessOb.observe(basicTd, { childList: true });
-    excessOb.observe(totalTd, { childList: true });
 }
 
 function getHour(td) {
