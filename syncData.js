@@ -23,7 +23,7 @@ function syncBasic(row) {
             }
         });
     });
-    homeroomOb.observe(homeroomTd, { childList: true });
+    homeroomOb.observe(homeroomTd, { childList: true, subtree: true });
 
     const nameTd = getNameTd(row);
     const nameOb = new MutationObserver((ms) => {
@@ -72,8 +72,8 @@ function syncCategTime(row) {
     });
 
     klasseTds.forEach((td) => {
-        engineerOb.observe(td, { childList: true });
-        businessOb.observe(td, { childList: true });
+        engineerOb.observe(td, { childList: true, subtree: true });
+        businessOb.observe(td, { childList: true, subtree: true });
     });
 }
 
@@ -88,9 +88,9 @@ function syncTotal(row) {
         totalTd.innerHTML = homeroomHour + klassesHour;
     });
 
-    totalOb.observe(homeroomTd, { childList: true });
+    totalOb.observe(homeroomTd, { childList: true, subtree: true });
     klasseTds.forEach((td) => {
-        totalOb.observe(td, { childList: true });
+        totalOb.observe(td, { childList: true, subtree: true });
     });
 }
 
@@ -103,6 +103,6 @@ function syncExcess(row) {
         excessTd.innerHTML = parseInt(totalTd.innerHTML) - parseInt(basicTd.innerHTML);
     });
 
-    excessOb.observe(basicTd, { childList: true });
-    excessOb.observe(totalTd, { childList: true });
+    excessOb.observe(basicTd, { childList: true, subtree: true });
+    excessOb.observe(totalTd, { childList: true, subtree: true });
 }
