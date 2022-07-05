@@ -1,12 +1,19 @@
-function showDownloadCSVButton() {
-    const csvLink = document.getElementById("csv-download");
-    csvLink.style.display = "";
+function showDownloadButtons() {
+    const downloadDiv = document.getElementById("download");
+    downloadDiv.style.display = "";
 }
 
 (function () {
     const csvLink = document.getElementById("csv-download");
     csvLink.addEventListener("click", () => {
         downloadCurriculumCSV();
+    });
+})();
+
+(function () {
+    const pngLink = document.getElementById("png-download");
+    pngLink.addEventListener("click", () => {
+        downloadCurriculumPNG();
     });
 })();
 
@@ -54,5 +61,16 @@ function getCurriculumDataFromRow(row) {
             }
         }
         return td.innerHTML;
+    });
+}
+
+function downloadCurriculumPNG() {
+    html2canvas(curriculumTable).then(function (canvas) {
+        const link = document.createElement("a");
+        link.setAttribute("href", canvas.toDataURL(("image/png")));
+        link.setAttribute("download", "curriculum_next.png");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 }

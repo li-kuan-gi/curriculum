@@ -10,7 +10,8 @@ csvForm.addEventListener("submit", event => {
             createTableEntries(data);
             syncData();
             showUpdateButton();
-            showDownloadCSVButton();
+            // showDownloadCSVButton();
+            showDownloadButtons();
         };
         reader.readAsText(csvFile);
     }
